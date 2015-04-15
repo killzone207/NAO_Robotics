@@ -8,13 +8,31 @@ import sys
 from naoqi import ALProxy
 from sympy import *
 
+#%%
 
-LeftArm = 0
-RightArm = 1
-LeftLeg = 2
-RightLeg = 3
+Stance = 0
+LJab = 1
+RJab = 2
+Block = 3
+LUppercut = 4
+RUppercut = 5
 
+LArm = ["LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll", "LWristYaw", "LHand"]
+LArmAngles = [[100, 0.5, -90, -88.5, -90], [-15, 0.5, -0.5, -2, 0], [114.5, 0.5, -90, -88.5, -90], [-10, 0.5, -90, -75, -90], [-20, 0.5, -90, -45, -90], [114.5, 0.5, -98, -88.5, -90]]
+RArm = ["RShoulderPitch", "RShoulderRoll", "RElbowYaw", "RElbowRoll", "RWristYaw", "RHand"]
+RArmAngles = [[100, -0.5, 90, 88.5, 90], [114.5, -0.5, 98, 88.5, 90], [-15, -0.5, 0.5, 2, 0], [-9, -0.5, 55, 75, 90], [114.5, -0.5, 98, 88.5, 90], [-20, -0.5, 90, 45, 90]]
+LLeg = ["LHipYawPitch", "LHipPitch", "LHipRoll", "LKneePitch", "LAnklePitch", "LAnkleRoll"]
+LLegAngles = [[0, -50, 2.5, 80, -36, -3], [0, 0, 0, 0, 0, 0]]
+RLeg = ["RHipYawPitch", "RHipPitch", "RHipRoll", "RKneePitch", "RAnklePitch", "RAnkleRoll"]
+RLegAngles = [[0, -50, -2.5, 80, -36, 3], [0, 0, 0, 0, 0, 0]]
 
+fractionMaxSpeed = 0.2
+
+print LArmAngles[Stance]
+
+#motion.setAngles(LArm, LArmAngles[Block], fractionMaxSpeed)
+
+#%%
 def StiffnessOn(proxy):
     pNames = "Body"
     pStiffnessLists = 1.0
