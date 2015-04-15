@@ -4,36 +4,25 @@ Created on Mon Apr 06 18:42:35 2015
 
 @author: killz_000
 """
-
-#import naoqi
+import sys
+from naoqi import ALProxy
 from sympy import *
 
-#%% constants definition
 
 LeftArm = 0
 RightArm = 1
 LeftLeg = 2
 RightLeg = 3
 
-#%% just an example on how to use the math lib within a function
 
-def testfunction():
-    y = cos(pi)
-    return y
-    
-print "y=", testfunction()
+def StiffnessOn(proxy):
+    pNames = "Body"
+    pStiffnessLists = 1.0
+    pTimeLists = 1.0
+    proxy.stiffnessInterpolation(pNames, pStiffnessLists, pTimeLists)
 
-#%% shortcuts trig functions
 
-def c(rad):
-    return cos(rad)
-def s(rad):
-    return sin(rad)
-
-    
-#%% inverse kinematics
-
-def invkin(bodypart, target):
+def forkin(bodypart, target):
     global LeftArm, RightArm, LeftLeg, RightLeg
     the1 = 0.0
     the2 = 0.0
@@ -70,4 +59,32 @@ def invkin(bodypart, target):
         TIBIA = 102.90
         FOOT = 45.19
 
-#%%
+
+def main(robotIP):
+    # init proxies
+    try:
+        motionProxy = ALProxy("ALMotion", robotIP, 9559)
+    except Exception, e:
+        print "Could notcreate proxy to ALMotion"
+        print "Error was: ", e
+        
+    try:
+        postureProxy = ALProxy("ALRobotPosture", robotIP, 9559)
+    except Exception, e:
+        print "Could not create proxy to ALRobotPosture"
+        print "Error was: ", e
+    
+    StiffnessOn(motionProxy)
+    
+    postureProxy.goToPosture("StandInit", 0.5)
+    
+
+if __name__ == "__main__":
+    robotIp = "127.0.0.1"
+
+    if len(sys.argv) <= 1:
+        print "Usage python motiuon_poseInit.pyrobotIP (optional default: 127.0.0.1)"
+    else:
+        robotIp = sys.argv[1]
+        
+    main(robotIp)
