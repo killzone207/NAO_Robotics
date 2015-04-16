@@ -76,7 +76,7 @@ def main(robotIP):
     
 
 if __name__ == "__main__":
-    robotIp = "127.0.0.1"
+    robotIp = "169.254.246.148"
 
     if len(sys.argv) <= 1:
         print "Usage python motiuon_poseInit.pyrobotIP (optional default: 127.0.0.1)"
