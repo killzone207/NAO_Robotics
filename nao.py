@@ -11,12 +11,27 @@ from sympy import *
 
 #%%
 
+motion = ALProxy("ALMotion", "nao.local", 9559)
+motion.moveInit()
+
 Stance = 0
 LJab = 1
 RJab = 2
 Block = 3
 LUppercut = 4
 RUppercut = 5
+
+Combo[[Stance, LJab, Stance, RJab], [Stance, LJab, RJab], [Stance, RJab, LUppercut], [Stance, LUppercut, RUppercut], [Stance, LJab, RJab, Block], [Stance, LJab, RJab, Block, RJab, LJab, Block]]
+
+Combo[1]
+
+for i in range(len(Combo[0])):
+    for move in Combo:
+        id1 = motion.setAngles(LArm, LArmAngles[move[i]], fractionMaxSpeed)
+        id2 = motion.setAngles(RArm, RArmAngles[move[i]], fractionMaxSpeed)
+        motion.wait(id2, 0)
+    
+    
 
 LArm = ["LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll", "LWristYaw", "LHand"]
 LArmAngles = [[100, 0.5, -90, -88.5, -90], [-15, 0.5, -0.5, -2, 0], [114.5, 0.5, -90, -88.5, -90], [-10, 0.5, -55, -75, -90], [-20, 0.5, -90, -45, -90], [114.5, 0.5, -98, -88.5, -90]]
