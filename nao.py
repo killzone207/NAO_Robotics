@@ -6,12 +6,10 @@ Created on Mon Apr 06 18:42:35 2015
 """
 import sys
 #import random
+import naoqi
 from naoqi import ALProxy
 
 #%%
-
-motion = ALProxy("ALMotion", "nao.local", 9559)
-motion.moveInit()
 
 Stance = 0
 LJab = 1
@@ -59,6 +57,8 @@ def main(robotIP):
     
     id = postureProxy.goToPosture("StandInit", 0.5)
     postureProxy.wait(id, 0)
+    motion = ALProxy("ALMotion", "nao.local", 9559)
+    motion.moveInit()
     
     motion.setAngles(LArm, LArmAngles[0], fractionMaxSpeed)
     motion.setAngles(RArm, RArmAngles[0], fractionMaxSpeed)
