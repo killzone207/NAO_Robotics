@@ -6,6 +6,7 @@ Created on Mon Apr 06 18:42:35 2015
 """
 import sys
 import math
+import time
 #import random
 from naoqi import ALProxy
 
@@ -80,7 +81,7 @@ def main(robotIP):
     motion.setAngles(RArm, RArmAngles[0], fractionMaxSpeed)
     motion.setAngles(LLeg, LLegAngles[0], fractionMaxSpeed)
     id = motion.setAngles(RLeg, RLegAngles[0], fractionMaxSpeed)
-    motion.wait(id, 0)
+    time.sleep(5)
     
     i = 0
     while i < MaxArmStates:
@@ -89,7 +90,7 @@ def main(robotIP):
         motion.setAngles(LLeg, LLegAngles[0], fractionMaxSpeed)
         id = motion.setAngles(RLeg, RLegAngles[0], fractionMaxSpeed)
         i += 1        
-        motion.wait(id, 0)
+        time.sleep(5)
         
     
 #    for i in range(len(Combo[0])):
