@@ -33,7 +33,7 @@ LLegAngles = [[0.0, -50.0, 2.5, 80.0, -36.0, -3.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.
 RLeg = ["RHipYawPitch", "RHipPitch", "RHipRoll", "RKneePitch", "RAnklePitch", "RAnkleRoll"]
 RLegAngles = [[0.0, -50.0, -2.5, 80.0, -36.0, 3.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]
 
-fractionMaxSpeed = 0.2
+fractionMaxSpeed = 0.5
 
 #%% convert 2d arrays from deg to rad
 def Deg_Rad(x, states, joints):
@@ -59,7 +59,7 @@ def StiffnessOn(proxy):
 def main(robotIP):
     # init proxies
     try:
-        motionProxy = ALProxy("ALMotion", robotIP, 9559)
+        motion = ALProxy("ALMotion", robotIP, 9559)
     except Exception, e:
         print "Could notcreate proxy to ALMotion"
         print "Error was: ", e
@@ -70,11 +70,10 @@ def main(robotIP):
         print "Could not create proxy to ALRobotPosture"
         print "Error was: ", e
     
-    StiffnessOn(motionProxy)
+    StiffnessOn(motion)
     
     id = postureProxy.goToPosture("StandInit", 0.5)
     postureProxy.wait(id, 0)
-    motion = ALProxy("ALMotion", "nao.local", 9559)
     motion.moveInit()
     
     motion.setAngles(LArm, LArmAngles[0], fractionMaxSpeed)
@@ -82,6 +81,16 @@ def main(robotIP):
     motion.setAngles(LLeg, LLegAngles[0], fractionMaxSpeed)
     id = motion.setAngles(RLeg, RLegAngles[0], fractionMaxSpeed)
     motion.wait(id, 0)
+    
+    i = 0
+    while i < MaxArmStates:
+        motion.setAngles(LArm, LArmAngles[i], fractionMaxSpeed)
+        motion.setAngles(RArm, RArmAngles[i], fractionMaxSpeed)
+        motion.setAngles(LLeg, LLegAngles[0], fractionMaxSpeed)
+        id = motion.setAngles(RLeg, RLegAngles[0], fractionMaxSpeed)
+        i += 1        
+        motion.wait(id, 0)
+        
     
 #    for i in range(len(Combo[0])):
 #        for move in Combo:
