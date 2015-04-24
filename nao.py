@@ -6,6 +6,7 @@ Created on Mon Apr 06 18:42:35 2015
 """
 import sys
 import math
+import random
 import time
 #import random
 from naoqi import ALProxy
@@ -81,17 +82,24 @@ def main(robotIP):
     motion.setAngles(RArm, RArmAngles[0], fractionMaxSpeed)
     motion.setAngles(LLeg, LLegAngles[0], fractionMaxSpeed)
     id = motion.setAngles(RLeg, RLegAngles[0], fractionMaxSpeed)
-    time.sleep(5)
+    time.sleep(1)
+    
+    
     
     i = 0
-    while i < MaxArmStates:
-        motion.setAngles(LArm, LArmAngles[i], fractionMaxSpeed)
-        motion.setAngles(RArm, RArmAngles[i], fractionMaxSpeed)
+    rand = random.randint(0, len(Combo))
+    while 1:
+        motion.setAngles(LArm, LArmAngles[Combo[rand][i]], fractionMaxSpeed)
+        motion.setAngles(RArm, RArmAngles[Combo[rand][i]], fractionMaxSpeed)
         motion.setAngles(LLeg, LLegAngles[0], fractionMaxSpeed)
-        id = motion.setAngles(RLeg, RLegAngles[0], fractionMaxSpeed)
-        i += 1        
-        time.sleep(5)
+        motion.setAngles(RLeg, RLegAngles[0], fractionMaxSpeed)
+        i += 1     
+        time.sleep(1)
         
+        if (i == (len(Combo[rand]) + 1)):
+            i = 0
+            rand = random.randint(0, len(Combo))
+            time.sleep(2)
     
 #    for i in range(len(Combo[0])):
 #        for move in Combo:
