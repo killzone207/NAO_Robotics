@@ -19,17 +19,23 @@ RJab = 2
 Block = 3
 LUppercut = 4
 RUppercut = 5
+LChop_Init = 6
+RChop_Init = 7
+LChop_Init = 8
+RChop_Init = 9
+Shove_Init = 10
+Shove_End = 11
 
-MaxArmStates = 6
+MaxArmStates = 12
 MaxLegStates = 2
 MaxJoints = 6
 
-Combo = [[Stance, LJab, Stance, RJab], [Stance, LJab, RJab], [Stance, RJab, LUppercut], [Stance, LUppercut, RUppercut], [Stance, LJab, RJab, Block], [Stance, LJab, RJab, Block, RJab, LJab, Block]]
+Combo = [[Stance, LJab, Stance, RJab], [Stance, LJab, RJab], [Stance, RJab, LUppercut], [Stance, LUppercut, RUppercut], [Stance, LJab, RJab, Block], [Stance, LJab, RJab, Block, RJab, LJab, Block], [Stance, LChop_Init, LChop_End, RJab, Block], [Stance, Shove_Init, Shove_End, RChop_Init, RChop_End], [Stance, LUppercut, RJab, Shove_Init, Shove_End, Block]]
 
 LArm = ["LShoulderPitch", "LShoulderRoll", "LElbowYaw", "LElbowRoll", "LWristYaw", "LHand"]
-LArmAngles = [[100.0, 0.5, -90.0, -88.5, -90.0, 0.0], [-15.0, 0.5, -0.5, -2.0, 0.0, 0.0], [114.5, 0.5, -90.0, -88.5, -90.0, 0.0], [-10.0, 0.5, -55.0, -75.0, -90.0, 0.0], [-20.0, 0.5, -90.0, -45.0, -90.0, 0.0], [114.5, 0.5, -98.0, -88.5, -90.0, 0.0]]
+LArmAngles = [[100.0, 0.5, -90.0, -88.5, -90.0, 0.0], [-15.0, 0.5, -0.5, -2.0, 0.0, 0.0], [114.5, 0.5, -90.0, -88.5, -90.0, 0.0], [-10.0, 0.5, -55.0, -75.0, -90.0, 0.0], [-20.0, 0.5, -90.0, -45.0, -90.0, 0.0], [114.5, 0.5, -98.0, -88.5, -90.0, 0.0], [-50.0, 25.0, -90.0, -45.0, -20.0, 1.0], [114.5, 0.5, -98.0, -88.5, -90.0, 0.0], [70.0, 0.5, -30.0, -45.0, -70.0, 1.0], [114.5, 0.5, -98.0, -88.5, -90.0, 0.0], [-15.0, 40.0, -11.0, -89.5, 60.0, 1.0], [-15.0, 0.5, -11.0, 25.0, 60.0, 1.0]]
 RArm = ["RShoulderPitch", "RShoulderRoll", "RElbowYaw", "RElbowRoll", "RWristYaw", "RHand"]
-RArmAngles = [[100.0, -0.5, 90.0, 88.5, 90.0, 0.0], [114.5, -0.5, 98.0, 88.5, 90.0, 0.0], [-15.0, -0.5, 0.5, 2.0, 0.0, 0.0], [-10.0, -0.5, 55.0, 75.0, 90.0, 0.0], [114.5, -0.5, 98.0, 88.5, 90.0, 0.0], [-20.0, -0.5, 90.0, 45.0, 90.0, 0.0]]
+RArmAngles = [[100.0, -0.5, 90.0, 88.5, 90.0, 0.0], [114.5, -0.5, 98.0, 88.5, 90.0, 0.0], [-15.0, -0.5, 0.5, 2.0, 0.0, 0.0], [-10.0, -0.5, 55.0, 75.0, 90.0, 0.0], [114.5, -0.5, 98.0, 88.5, 90.0, 0.0], [-20.0, -0.5, 90.0, 45.0, 90.0, 0.0], [114.5, -0.5, 98.0, 88.5, 90.0, 0.0], [-50.0, -25.0, 90.0, 45.0, 20.0, 1.0], [114.5, -0.5, 98.0, 88.5, 90.0, 0.0], [70.0, -0.5, 30.0, 45.0, 70.0, 1.0], [-15.0, -40.0, 11.0, 89.5, -60.0, 1.0], [-15.0, -0.5, 11.0, 25.0, -60.0, 1.0]]
 LLeg = ["LHipYawPitch", "LHipPitch", "LHipRoll", "LKneePitch", "LAnklePitch", "LAnkleRoll"]
 LLegAngles = [[0.0, -50.0, 2.5, 80.0, -36.0, -3.0], [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]]
 RLeg = ["RHipYawPitch", "RHipPitch", "RHipRoll", "RKneePitch", "RAnklePitch", "RAnkleRoll"]
@@ -96,10 +102,10 @@ def main(robotIP):
         i += 1     
         time.sleep(1)
         
-        if (i == (len(Combo[rand]) + 1)):
+        if (i == (len(Combo[rand]) - 1)):
             i = 0
             rand = random.randint(0, len(Combo))
-            time.sleep(2)
+            time.sleep(1)
     
 #    for i in range(len(Combo[0])):
 #        for move in Combo:
